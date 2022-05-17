@@ -13,17 +13,32 @@ class BlogsController < ApplicationController
   # GET /blogs/new
   def new
     @blog = Blog.new
-   end
+
+    
+
+  end
 
   # GET /blogs/1/edit
   def edit
+
+  end
+
+  def create
+    @blog = Blog.new(blog_params)
+    if @blog.save
+      redirect_to blogs_path, notice: "投稿しました"      
+    else
+      redirect_to blogs_path, notice: "投稿失敗しました"
+    end
+    
   end
 
   # POST /blogs or /blogs.json
-  def create
+  def confirm
+
     @blog = Blog.new(blog_params)
-    # byebug
-    @blog = Blog.find(4)
+
+    # @blog = Blog.find(4)
 
       # if @blog.save
 
@@ -35,14 +50,13 @@ class BlogsController < ApplicationController
 
   # PATCH/PUT /blogs/1 or /blogs/1.json
   def update
-    respond_to do |format|
-      if @blog.update(blog_params)
-        format.html { redirect_to blog_url(@blog), notice: "Blog was successfully updated." }
-        format.json { render :show, status: :ok, location: @blog }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @blog.errors, status: :unprocessable_entity }
-      end
+    @blog = Blog.find(params[:id])
+    acheive = @blog.update(blog_params)
+
+    if acheive === true 
+      redirect_to blogs_path, notice: "更新成功"
+    else
+      redirect_to blogs_path, notice: "更新失敗"
     end
   end
 
@@ -59,13 +73,11 @@ class BlogsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_blog
-      
       @blog = Blog.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def blog_params
-
       params.require(:blog).permit(:title, :content)
     end
 end
