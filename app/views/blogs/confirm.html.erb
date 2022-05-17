@@ -1,13 +1,24 @@
-<%= notice%>
+<% if @blog.errors.any?%>
+  <% if !@blog.errors.messages[:title].empty? %>
+  <%byebug%>
+  <h3>タイトルエラー！！<br><%= @blog.errors.messages[:title]%></h3><br>
+  <% end %>
+  <% if !@blog.errors.messages[:content].empty? %>
+  <h3>コンテントエラー！！<br><%= @blog.errors.messages[:content]%></h3><br>
+  <% end%>
+<% end%>
+
 <h3>以下の内容で、送信する。</h3>
 
-<%= form_with(model: @blog, url: blogs_path, local: true) do |form| %>
+<%= form_with(model: @blog,  local: true) do |form| %>
   <%= form.hidden_field :title %>
   <%= form.hidden_field :content %>
 
   <p>タイトル:<%= @blog.title %></p>
   <p>本文:<%= @blog.content %></p>
-  <%= form.submit  "登録する" %>
-
+  <% if !@blog.errors.any?%>
+    <%= form.submit  "登録する" %>
+  <% end%>
   <%= form.submit "戻る", name: 'back' %>
 <% end %>
+

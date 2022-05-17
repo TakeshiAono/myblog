@@ -1,11 +1,11 @@
-
 <p><%= notice %></p>
 
 
-<h1>Blogs</h1>
+<h1>ブログ</h1>
 <%= link_to '新しいブログを投稿する', new_blog_path %>
 <br>
 <br>
+
 
 <table>
   <thead>
@@ -16,6 +16,7 @@
       <td>ブログ更新日</td>
     </tr>
   </thead>
+
 
   <tbody>
     <% @blogs.each do |blog| %>
@@ -31,7 +32,5 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
 
 
